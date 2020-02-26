@@ -15,6 +15,7 @@ autovcv2
 └───data
 |   │   dataloader.py
 |   |   preprocessing.py
+|   |   data.pkl
 |   |       
 |   └───VCTK
 |       └─── p225
@@ -57,3 +58,8 @@ autovcv2
 * Clean Code 
     * 希望能在更新File & Data Structure後開始做，目前的code太難懂了，充滿了超多的hack
 
+
+需要確認，寫的Files：
+
+- [ ] `dataLoader.py`
+- [ ] `preprocessing.py`
