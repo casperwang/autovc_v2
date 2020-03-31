@@ -38,8 +38,8 @@ class voiceDataset(Dataset):
 	iter_folder = []
 
 	def __init__(self):
-		self.iter_folder = pickle.load(open('./data_loader/iters.pkl', "rb"))
-		self.wav_folder = pickle.load(open('./data_loader/data.pkl', "rb"))
+		self.iter_folder = pickle.load(open('./data/iters.pkl', "rb"))
+		self.wav_folder = pickle.load(open('./data/data.pkl', "rb"))
 	
 	def __getitem__(self, index): #Should iterate through all possible triples
 		item = dict()

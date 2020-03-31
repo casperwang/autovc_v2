@@ -3,3 +3,7 @@
 
 /data/data.pkl
 /data/iters.pkl
+
+/runs
+
+/weights
