@@ -42,24 +42,6 @@ autovcv2
 |    
 ```
 
-## 目前目標
+## 目前進度
 
-* 將File & Data Structure 弄成像上面寫的那樣
-    * 將File & Data Structure定義好 (V)
-    * 之後可以開始Refactor Code，因為給的code是inference用的，和training用的
-* 可以成功開始GPU Training
-    * 將Data Loader 完成
-        * 需要先將File & Data Structure 更新！
-    * Enable CUDA (V)
-        * 軟體都裝完了！在Windows上用`conda`是可以的
-    * 確認code和我的電腦是play nice的，沒有bug 
-        * Feb. 26前確認完
-    * 可以先用舊版的code去跑，不和上下的目標衝突
-* Clean Code 
-    * 希望能在更新File & Data Structure後開始做，目前的code太難懂了，充滿了超多的hack
-
-
-需要確認，寫的Files：
-
-- [ ] `dataLoader.py`
-- [ ] `preprocessing.py`
+* 可以開始train了，loss也有在training的過程中下降，但conversion.py還無法運作，因此尚未測試train出來的weights是否實際可用
