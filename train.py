@@ -19,7 +19,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 lmb = 1
 mu = 1
-batch_size = 1
+batch_size = 2
 
 
 #Init loss functions
