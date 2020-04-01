@@ -12,7 +12,7 @@ dim_style = 256
 learning_rate = 0.0001
 dim_pre = 512
 freq = 32
-batch_size = 32
+batch_size = 2
 #other consts 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") #Uses GPU when availabl
 

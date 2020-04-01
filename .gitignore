@@ -8,6 +8,6 @@
 
 /weights
 
-/test/checkpoint_step001000000_ema.pth
+/checkpoint_step001000000_ema.pth
 
 /autovc.ckpt
