@@ -45,26 +45,26 @@ class voiceDataset(Dataset):
 		item = dict()
 		idx = self.iter_folder[index]['i']
 		
-		style_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['j']], 32)
-		content_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['k']], 32)
+		trg_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['j']], 32)
+		org_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['k']], 32)
 		
-		st_shape = style_uttr.shape
-		cont_shape = content_uttr.shape
+		trg_shape = trg_uttr.shape
+		org_shape = org_uttr.shape
 
-		style_uttr = normalize_volume(style_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		content_uttr = normalize_volume(content_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		trg_uttr = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		org_uttr = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
 
-		style_enc = encoder.embed_utterance(style_uttr)
-		content_enc = encoder.embed_utterance(content_uttr)
+		trg_enc = encoder.embed_utterance(trg_uttr)
+		org_enc = encoder.embed_utterance(org_uttr)
 
-		style_uttr = style_uttr.reshape(st_shape)
-		content_uttr = content_uttr.reshape(cont_shape)
+		trg_uttr = trg_uttr.reshape(trg_shape)
+		org_uttr = org_uttr.reshape(org_shape)
 
 		item["person"] = idx
-		item["style_uttr"] = style_uttr
-		item["content_uttr"] = content_uttr
-		item["style_enc"] = style_enc
-		item["content_enc"] = content_enc
+		item["trg_uttr"] = trg_uttr
+		item["org_uttr"] = org_uttr
+		item["trg_enc"] = trg_enc
+		item["org_enc"] = org_enc
 
 		return item
 	

@@ -34,11 +34,11 @@ spect_vc = []
 
 for i, sbmt_i in enumerate(tqdm(metadata)):
     
-    uttr_org = sbmt_i["content_uttr"].to(device).double()
+    uttr_org = sbmt_i["org_uttr"].to(device).double()
     
-    emb_org = sbmt_i['content_enc'].to(device).double()
-        
-    emb_trg = sbmt_i["style_enc"].to(device).double()
+    emb_org = sbmt_i['org_enc'].to(device).double()
+    
+    emb_trg = sbmt_i["trg_enc"].to(device).double()
     
     with torch.no_grad():
         _, x_identic_psnt, _ = G(uttr_org, emb_org, emb_trg)
