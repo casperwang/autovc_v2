@@ -65,7 +65,6 @@ class voiceDataset(Dataset):
 		item["content_uttr"] = content_uttr
 		item["style_enc"] = style_enc
 		item["content_enc"] = content_enc
-
 		return item
 	
 	def __len__(self):
