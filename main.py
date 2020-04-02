@@ -6,15 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 import torch.optim as optim
 import argparse
 import pdb
-
-bottle_neck = 32
-dim_style = 256
-learning_rate = 0.0001
-dim_pre = 512
-freq = 32
-batch_size = 2
-#other consts 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") #Uses GPU when availabl
+from params import *
 
 
 #Init generator, optimizer 
@@ -48,9 +40,9 @@ if __name__ == "__main__":
 	if(opts.mode == "train"):
 		G = G.train()
 		current_iter = 0
-		for i in range(opts.epochs):
+		for epoch in range(opts.epochs):
 			#Put config as argument
-			current_iter = train_one_epoch(G, optimizer, dataset, device, save_dir, current_iter, opts.write)
+			current_iter = train_one_epoch(G, optimizer, dataset, device, save_dir, current_iter, epoch, opts.write)
 	else:
 		print("All other modes other than train are not available")
 

@@ -9,17 +9,15 @@ import torch
 import torch.optim as optim
 from tqdm import tqdm
 import torch.functional as F
+from params import *
+from conversion import convert
+from vocoder import genspec
 
 import pdb
 import atexit
 import os
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
-#constants 
-
-lmb = 1
-mu = 1
-batch_size = 2
 
 
 #Init loss functions
@@ -36,7 +34,7 @@ def pad_seq(x, base = 32):
 	assert len_pad >= 0
 	return np.pad(x, ((0, len_pad), (0, 0)), "constant"), len_pad
 
-def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, doWrite = True): #Takes a PyTorch DataLoader as input and 
+def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, current_epoch, doWrite = True): #Takes a PyTorch DataLoader as input and 
 	#model: 		the model that you wish to train
 	#optimizer:		the optimizer 
 	#dataset: 		a PyTorch DataLoader that can be enumerated
@@ -92,17 +90,19 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, d
 				writer.add_scalar("Loss", loss.item(), current_iter)
 
 		
-		if current_iter % 100 == 99:
+		if current_iter % 1000 == 999:
 			torch.save({
-				"epoch": epoch,
+				"epoch": current_epoch,
 				"model": model.state_dict(),
 				"optimizer": optimizer.state_dict()
 			}, save_dir + "/test_ckpt_{}iters.ckpt".format(current_iter))
 			torch.save({
-				"epoch": epoch,
+				"epoch": current_epoch,
 				"model": model.state_dict(),
 				"optimizer": optimizer.state_dict()
-			}, save_dir + "/last.ckpt".format(epoch))
+			}, save_dir + "/last.ckpt")
+			convert(model, current_iter)
+			genspec("./result_pkl/results_iter{}.pkl".format(current_iter), "res_{}".format(current_iter))
 
 
 
