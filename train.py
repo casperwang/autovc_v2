@@ -52,10 +52,10 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, d
 
 		current_iter = current_iter + 1
 
-		uttr_org  = datai["content_uttr"].to(device).double() #
-		uttr_trg  = datai["style_uttr"].to(device).double()  #This and the above will be B * T * F
-		emb_org = datai["content_enc"].to(device).double()#
-		emb_trg = datai["style_enc"].to(device).double() #This and the above will be B * 1 * dim_style
+		uttr_org  = datai["org_uttr"].to(device).double() #
+		uttr_trg  = datai["trg_uttr"].to(device).double()  #This and the above will be B * T * F
+		emb_org = datai["org_enc"].to(device).double()#
+		emb_trg = datai["trg_enc"].to(device).double() #This and the above will be B * 1 * dim_style
 
 
 		#Turn everything into PyTorch Tensors, and gives the outputs to device
