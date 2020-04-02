@@ -54,8 +54,10 @@ class voiceDataset(Dataset):
 		trg_uttr = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
 		org_uttr = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
 
-		trg_enc = encoder.embed_utterance(trg_uttr)
-		org_enc = encoder.embed_utterance(org_uttr)
+		trg_enc = np.resize([0], (256))
+		trg_enc[0] = 1
+		org_enc = np.resize([0], (256))
+		org_enc[0] = 1
 
 		trg_uttr = trg_uttr.reshape(trg_shape)
 		org_uttr = org_uttr.reshape(org_shape)
@@ -70,4 +72,3 @@ class voiceDataset(Dataset):
 	
 	def __len__(self):
 		return len(self.iter_folder)
-

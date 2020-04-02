@@ -14,7 +14,7 @@ people = dict()
 mels = dict()
 iters = []
 WAV_LEN = 256
-PEOPLE_CNT = 20
+PEOPLE_CNT = 1
 
 p = 0
 for i in range(225, 225 + PEOPLE_CNT):
