@@ -55,8 +55,8 @@ with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 print("finish 'data.pkl' !!!")
 
 for person in mels.keys():
-	for j in range(1, len(mels[person])+1):
-		for k in range(1, len(mels[person])+1):
+	for j in range(0, len(mels[person])):
+		for k in range(0, len(mels[person])):
 			if j != k:
 				iters.append({'i':person, 'j':j, 'k':k})
 
