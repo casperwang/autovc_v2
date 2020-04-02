@@ -11,7 +11,7 @@ from tqdm import tqdm
 import torch.functional as F
 from params import *
 from conversion import convert
-from vocoder import genspec
+#from vocoder import genspec
 
 import pdb
 import atexit
@@ -102,8 +102,8 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 				"optimizer": optimizer.state_dict()
 			}, save_dir + "/last.ckpt")
 			convert(model, current_iter)
-			genspec("./result_pkl/results_iter{}.pkl".format(current_iter), "res_{}".format(current_iter))
+			#genspec("./result_pkl/results_iter{}.pkl".format(current_iter), "res_{}".format(current_iter))
 
 
 
-	return current_iter
+	return current_iters

@@ -7,7 +7,7 @@ freq = 32
 
 #training constants
 learning_rate = 0.001
-batch_size = 1
+batch_size = 2
 
 #Loss constants
 lmb = 1
