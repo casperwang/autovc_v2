@@ -64,7 +64,7 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		mel_outputs_postnet.squeeze(1)
 		codes.squeeze(1)
 
-		_, _, trg_codes = model(mel_outputs, emb_trg, emb_org)
+		_, _, trg_codes = model(mel_outputs_postnet, emb_trg, emb_org)
 		#mel_outputs: 			the output sans postnet
 		#mel_outputs_postnet: 	the above with postnet added
 		#codes:					encoder output	
@@ -75,11 +75,11 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		#Zero gradients
 		optimizer.zero_grad()
 		#Calculate Loss
-		L_Recon = MSELoss(mel_outputs_postnet, uttr_trg)
-		L_Recon0 = MSELoss(mel_outputs, uttr_trg)
+		L_Recon = MSELoss(mel_outputs_postnet, uttr_org)
+		L_Recon0 = MSELoss(mel_outputs, uttr_org)
 		L_Content = L1Loss(codes, trg_codes)
 
-		loss = L_Recon + mu * L_Recon0 + lmb * L_Content
+		loss = L_Recon * L_Recon + mu * L_Recon0 + lmb * L_Content
 
 		loss.backward()
 		optimizer.step()

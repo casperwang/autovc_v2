@@ -18,3 +18,5 @@ def genspec(pkl_path, write_name, save_dir = "./result_wav/"):
 		c = spect[1]
 		waveform = wavegen(model, c=c)
 		librosa.output.write_wav(save_dir + write_name + '.wav', waveform, sr=16000)
+
+genspec('test.pkl', 'test')
