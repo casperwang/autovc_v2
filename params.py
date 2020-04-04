@@ -11,7 +11,7 @@ batch_size = 2
 
 #Loss constants
 lmb = 1
-mu = 1
+mu = 0
 
 #other constants
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") #Uses one GPU when available
