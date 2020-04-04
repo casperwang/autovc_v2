@@ -36,9 +36,22 @@ def convert(model, current_iter):
 			_, x_identic_psnt, _ = model(uttr_org, emb_org, emb_trg)
 		
 		x_identic_psnt = x_identic_psnt.unsqueeze(0)
+		
 		uttr_trg = x_identic_psnt[0, 0, :, :].cpu().numpy()
 		
 		spect_vc.append( ('{}x{}'.format(sbmt_i["person"].item(), sbmt_i["person"].item()), uttr_trg) )
 
 	with open('./result_pkl/results_iter{}.pkl'.format(current_iter), 'wb+') as handle:
 		pickle.dump(spect_vc, handle)
+
+def test():
+	for i, sbmt_i in enumerate(tqdm(metadata)):
+		uttr_org = sbmt_i["org_uttr"].to(device).double()
+		uttr_org = uttr_org.squeeze(0).cpu().numpy()
+		
+		spect_vc.append( ('{}x{}'.format(sbmt_i["person"].item(), sbmt_i["person"].item()), uttr_org) )
+
+	with open('./test.pkl', 'wb') as handle:
+		pickle.dump(spect_vc, handle)
+
+test()
