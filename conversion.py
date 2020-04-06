@@ -20,7 +20,7 @@ import pdb
 os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 
 
-data = datas.voiceDataset()
+data = datas.testDataset()
 metadata = torch.utils.data.DataLoader([data[0]], batch_size=batch_size)
 
 spect_vc = []
