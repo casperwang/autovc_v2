@@ -66,9 +66,9 @@ with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
 print("Finish 'iters.pkl' !!!")
 '''
 
-iters.append({'p1':1, 'p2':2, 'j':0, 'k':0})
-iters.append({'p1':1, 'p2':1, 'j':0, 'k':0})
-iters.append({'p1':2, 'p2':2, 'j':0, 'k':0})
+iters.append({'p1':1, 'p2':2, 'i':0, 'j':0})
+iters.append({'p1':1, 'p2':1, 'i':0, 'j':0})
+iters.append({'p1':2, 'p2':2, 'i':0, 'j':0})
 
 with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
 	pickle.dump(iters, handle)
