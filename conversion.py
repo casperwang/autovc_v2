@@ -20,8 +20,9 @@ import pdb
 os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 
 
-data = datas.voiceDataset()
-metadata = torch.utils.data.DataLoader([data[0]], batch_size=1)
+
+data = datas.testDataset()
+metadata = torch.utils.data.DataLoader(data, batch_size=1)
 
 spect_vc = []
 def convert(model, current_iter):
@@ -44,14 +45,22 @@ def convert(model, current_iter):
 	with open('./result_pkl/results_iter{}.pkl'.format(current_iter), 'wb+') as handle:
 		pickle.dump(spect_vc, handle)
 
-def test():
+def convert_test(model, current_iter):
 	for i, sbmt_i in enumerate(tqdm(metadata)):
 		uttr_org = sbmt_i["org_uttr"].to(device).double()
-		uttr_org = uttr_org.squeeze(0).cpu().numpy()
 		
-		spect_vc.append( ('{}x{}'.format(sbmt_i["person"].item(), sbmt_i["person"].item()), uttr_org) )
+		emb_org = sbmt_i['org_enc'].to(device).double()
+		
+		emb_trg = sbmt_i["trg_enc"].to(device).double()
+		
+		with torch.no_grad():
+			_, x_identic_psnt, _ = model(uttr_org, emb_org, emb_trg)
+		
+		x_identic_psnt = x_identic_psnt.unsqueeze(0)
+		
+		uttr_trg = x_identic_psnt[0, 0, :, :].cpu().numpy()
+		
+		spect_vc.append( ('{}x{}'.format(sbmt_i["p2"].item(), sbmt_i["p1"].item()), uttr_trg) )
 
-	with open('./test.pkl', 'wb') as handle:
+	with open('./result_pkl/results_iter{}.pkl'.format(current_iter), 'wb+') as handle:
 		pickle.dump(spect_vc, handle)
-
-test()

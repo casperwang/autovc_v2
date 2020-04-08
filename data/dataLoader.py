@@ -70,3 +70,43 @@ class voiceDataset(Dataset):
 	
 	def __len__(self):
 		return len(self.iter_folder)
+
+class testDataset(Dataset):
+	wav_folder = []
+	iter_folder = []
+
+	def __init__(self):
+		self.iter_folder = pickle.load(open('./data/test_iters.pkl', "rb"))
+		self.wav_folder = pickle.load(open('./data/data.pkl', "rb"))
+	
+	def __getitem__(self, index): #Should iterate through all possible triples
+		item = dict()
+		p1 = self.iter_folder[index]['p1']
+		p2 = self.iter_folder[index]['p2']
+		
+		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
+		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
+		
+		trg_shape = trg_uttr.shape
+		org_shape = org_uttr.shape
+
+		trg_uttr = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		org_uttr = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+
+		trg_enc = encoder.embed_utterance(trg_uttr)
+		org_enc = encoder.embed_utterance(org_uttr)
+
+		trg_uttr = trg_uttr.reshape(trg_shape)
+		org_uttr = org_uttr.reshape(org_shape)
+
+		item["p1"] = p1
+		item["p2"] = p2
+		item["trg_uttr"] = trg_uttr
+		item["org_uttr"] = org_uttr
+		item["trg_enc"] = trg_enc
+		item["org_enc"] = org_enc
+
+		return item
+	
+	def __len__(self):
+		return len(self.iter_folder)

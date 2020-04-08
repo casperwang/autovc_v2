@@ -15,6 +15,7 @@ mels = dict()
 iters = []
 WAV_LEN = 256
 PEOPLE_CNT = 20
+write_path = './'
 
 p = 0
 for i in range(225, 225 + PEOPLE_CNT):
@@ -32,8 +33,7 @@ for i in range(225, 225 + PEOPLE_CNT):
 			c += 1
 
 print("finish Checking File!!!")
-
-write_path = './'
+'''
 for wav_path in tqdm(wavs):
 
 	basename = os.path.basename(wav_path).split('.wav')[0]
@@ -60,7 +60,17 @@ for person in mels.keys():
 			if j != k:
 				iters.append({'i':person, 'j':j, 'k':k})
 
-with open(os.path.join(write_path,'iters.pkl'),'wb') as handle:
+with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
 	pickle.dump(iters, handle)
 
 print("Finish 'iters.pkl' !!!")
+'''
+
+iters.append({'p1':1, 'p2':2, 'j':0, 'k':0})
+iters.append({'p1':1, 'p2':1, 'j':0, 'k':0})
+iters.append({'p1':2, 'p2':2, 'j':0, 'k':0})
+
+with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
+	pickle.dump(iters, handle)
+
+print("Finish 'test_iters.pkl' !!!")
