@@ -81,10 +81,11 @@ class testDataset(Dataset):
 	
 	def __getitem__(self, index): #Should iterate through all possible triples
 		item = dict()
-		idx = self.iter_folder[index]['i']
+		p1 = self.iter_folder[index]['p1']
+		p2 = self.iter_folder[index]['p2']
 		
-		trg_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['j']], 32)
-		org_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['k']], 32)
+		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
+		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
 		
 		trg_shape = trg_uttr.shape
 		org_shape = org_uttr.shape
@@ -98,7 +99,8 @@ class testDataset(Dataset):
 		trg_uttr = trg_uttr.reshape(trg_shape)
 		org_uttr = org_uttr.reshape(org_shape)
 
-		item["person"] = idx
+		item["p1"] = p1
+		item["p2"] = p2
 		item["trg_uttr"] = trg_uttr
 		item["org_uttr"] = org_uttr
 		item["trg_enc"] = trg_enc

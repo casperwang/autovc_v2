@@ -65,12 +65,10 @@ with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
 
 print("Finish 'iters.pkl' !!!")
 '''
-for p1 in mels.keys():
-	for j in range(0, 2):
-		for p2 in mels.keys():
-			for k in range(0, 2):
-				if j != k and p1 != p2:
-					iters.append({'i':p1, 'j':j, 'k':k})
+
+iters.append({'p1':1, 'p2':2, 'j':0, 'k':0})
+iters.append({'p1':1, 'p2':1, 'j':0, 'k':0})
+iters.append({'p1':2, 'p2':2, 'j':0, 'k':0})
 
 with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
 	pickle.dump(iters, handle)
