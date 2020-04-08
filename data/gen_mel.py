@@ -19,7 +19,7 @@ write_path = './'
 
 p = 0
 for i in range(225, 225 + PEOPLE_CNT):
-	DIR = './VCTK/'+str(i)
+	DIR = './VCTK/p'+str(i)
 	if os.path.isdir(DIR):
 		p += 1
 		people[i] = p
@@ -34,7 +34,7 @@ for i in range(225, 225 + PEOPLE_CNT):
 
 print("finish Checking File!!!")
 for wav_path in tqdm(wavs):
-
+ 
 	basename = os.path.basename(wav_path).split('.wav')[0]
 	idx = people[int(basename[-7:-4])]
 	wav = audio.load_wav(wav_path)
