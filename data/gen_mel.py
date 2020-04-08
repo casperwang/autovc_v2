@@ -14,11 +14,11 @@ people = dict()
 mels = dict()
 iters = []
 WAV_LEN = 256
-PEOPLE_CNT = 1
+PEOPLE_CNT = 20
 
 p = 0
 for i in range(225, 225 + PEOPLE_CNT):
-	DIR = './VCTK/p'+str(i)
+	DIR = './VCTK/'+str(i)
 	if os.path.isdir(DIR):
 		p += 1
 		people[i] = p

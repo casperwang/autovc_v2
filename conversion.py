@@ -21,7 +21,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 
 
 data = datas.voiceDataset()
-metadata = torch.utils.data.DataLoader([data[0]], batch_size=batch_size)
+metadata = torch.utils.data.DataLoader([data[0]], batch_size=1)
 
 spect_vc = []
 def convert(model, current_iter):

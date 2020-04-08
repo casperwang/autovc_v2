@@ -25,5 +25,6 @@ def genall(pkl_dir = "./result_pkl"):
 		for f in x:
 			if f[0] == 'r':
 				print("Gen: " + f[ : -4])
+				print(f)
 				genspec(pkl_dir + '/' + f, f[ : -4])
 
