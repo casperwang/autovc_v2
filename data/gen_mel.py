@@ -19,7 +19,7 @@ write_path = './'
 
 p = 0
 for i in range(225, 225 + PEOPLE_CNT):
-	DIR = './VCTK/p'+str(i)
+	DIR = './VCTK/'+str(i)
 	if os.path.isdir(DIR):
 		p += 1
 		people[i] = p

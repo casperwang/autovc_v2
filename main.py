@@ -1,6 +1,7 @@
 from model import Generator
 from train import train_one_epoch
 import data.dataLoader as data
+import conversion
 import torch 
 from torch.utils.tensorboard import SummaryWriter
 import torch.optim as optim
@@ -43,6 +44,12 @@ if __name__ == "__main__":
 		for epoch in range(opts.epochs):
 			#Put config as argument
 			current_iter = train_one_epoch(G, optimizer, dataset, device, save_dir, current_iter, epoch, opts.write)
-	else:
-		print("All other modes other than train are not available")
+	elif opts.mode == "test":
+		g_checkpoint = torch.load(load_path, map_location = torch.device(device)) #Load from
+		G.load_state_dict(g_checkpoint['model'])
+		optimizer.load_state_dict(g_checkpoint['optimizer'])
+		print("Finished loading")
+		G = G.eval();
+		conversion.convert_test(G, "jizz");
+				
 
