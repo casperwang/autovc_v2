@@ -15,10 +15,12 @@ model.load_state_dict(checkpoint["state_dict"])
 
 def genspec(pkl_path, write_name, save_dir = "./result_wav/"):
 	spect_vc = pickle.load(open(pkl_path, "rb"))
+	i = 0
 	for spect in spect_vc:
 		c = spect[1]
+		i = i + 1
 		waveform = wavegen(model, c=c)
-		librosa.output.write_wav(save_dir + write_name + '.wav', waveform, sr=16000)
+		librosa.output.write_wav(save_dir + write_name + '_' + str(i) + '.wav', waveform, sr=16000)
 
 def genall(pkl_dir = "./result_pkl"):
 	for (_, _, x) in os.walk(pkl_dir):
