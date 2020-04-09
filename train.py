@@ -87,7 +87,7 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		running_loss += loss.item()
 
 		if(doWrite == True):
-				writer.add_scalar("Loss", loss.item(), current_iter)
+			writer.add_scalar("Loss", loss.item(), current_iter)
 
 		
 		if current_iter % 1000 == 999:

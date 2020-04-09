@@ -36,31 +36,24 @@ def normalize_volume(wav, target_dBFS, increase_only=False, decrease_only=False)
 class voiceDataset(Dataset):
 	wav_folder = []
 	iter_folder = []
+	style_folder = []
 
 	def __init__(self):
 		self.iter_folder = pickle.load(open('./data/iters.pkl', "rb"))
+		self.style_folder = pickle.load(open('./data/style_data.pkl', "rb"))
 		self.wav_folder = pickle.load(open('./data/data.pkl', "rb"))
 	
 	def __getitem__(self, index): #Should iterate through all possible triples
 		item = dict()
-		idx = self.iter_folder[index]['i']
+		p1 = self.iter_folder[index]['i']
 		
-		trg_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['j']], 32)
-		org_uttr, _ = pad_seq(self.wav_folder[idx][self.iter_folder[index]['k']], 32)
+		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['j']], 32)
+		org_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['k']], 32)
 		
-		trg_shape = trg_uttr.shape
-		org_shape = org_uttr.shape
-
-		trg_uttr = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		org_uttr = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-
-		trg_enc = encoder.embed_utterance(trg_uttr)
-		org_enc = encoder.embed_utterance(org_uttr)
-
-		trg_uttr = trg_uttr.reshape(trg_shape)
-		org_uttr = org_uttr.reshape(org_shape)
-
-		item["person"] = idx
+		trg_enc = style_folder[p1]
+		org_enc = style_folder[p1]
+		
+		item["person"] = p1
 		item["trg_uttr"] = trg_uttr
 		item["org_uttr"] = org_uttr
 		item["trg_enc"] = trg_enc
@@ -74,9 +67,11 @@ class voiceDataset(Dataset):
 class testDataset(Dataset):
 	wav_folder = []
 	iter_folder = []
+	style_folder = []
 
 	def __init__(self):
 		self.iter_folder = pickle.load(open('./data/test_iters.pkl', "rb"))
+		self.style_folder = pickle.load(open('./data/style_data.pkl', "rb"))
 		self.wav_folder = pickle.load(open('./data/data.pkl', "rb"))
 	
 	def __getitem__(self, index): #Should iterate through all possible triples
@@ -87,17 +82,8 @@ class testDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
 		
-		trg_shape = trg_uttr.shape
-		org_shape = org_uttr.shape
-
-		trg_uttr = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		org_uttr = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-
-		trg_enc = encoder.embed_utterance(trg_uttr)
-		org_enc = encoder.embed_utterance(org_uttr)
-
-		trg_uttr = trg_uttr.reshape(trg_shape)
-		org_uttr = org_uttr.reshape(org_shape)
+		trg_enc = style_folder[p1]
+		org_enc = style_folder[p2]
 
 		item["p1"] = p1
 		item["p2"] = p2
