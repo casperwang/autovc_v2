@@ -82,8 +82,8 @@ class testDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
 		
-		trg_enc = style_folder[p1]
-		org_enc = style_folder[p2]
+		trg_enc = self.style_folder[p1]
+		org_enc = self.style_folder[p2]
 
 		item["p1"] = p1
 		item["p2"] = p2
