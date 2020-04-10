@@ -23,6 +23,9 @@ write_path = './'
 int16_max = (2 ** 15) - 1
 encoder = VoiceEncoder()
 
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
+
 def pad_seq(x, base=32):
 	len_out = int(base * ceil(float(x.shape[0])/base))
 	len_pad = len_out - x.shape[0]
@@ -93,17 +96,16 @@ with open(os.path.join(write_path,'style_data.pkl'),'wb') as handle:
 
 print("finish 'style_data.pkl' !!!")
 
-'''
 for person in mels.keys():
 	for j in range(0, len(mels[person])):
 		for k in range(0, len(mels[person])):
 			if j != k:
 				iters.append({'i':person, 'j':j, 'k':k})
-with open(os.path.join(write_path,'test_iters.pkl'),'wb') as handle:
+with open(os.path.join(write_path,'iters.pkl'),'wb') as handle:
 	pickle.dump(iters, handle)
 print("Finish 'iters.pkl' !!!")
-'''
 
+iters = []
 iters.append({'p1':1, 'p2':1, 'i':0, 'j':0})
 iters.append({'p1':2, 'p2':2, 'i':0, 'j':0})
 iters.append({'p1':1, 'p2':2, 'i':0, 'j':0})
