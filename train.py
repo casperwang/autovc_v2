@@ -89,7 +89,6 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		if(doWrite == True):
 			writer.add_scalar("Loss", loss.item(), current_iter)
 
-		
 		if current_iter % 1000 == 999:
 			torch.save({
 				"epoch": current_epoch,

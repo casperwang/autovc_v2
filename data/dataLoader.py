@@ -50,8 +50,11 @@ class voiceDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['j']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['k']], 32)
 		
-		trg_enc = self.style_folder[p1]
-		org_enc = self.style_folder[p1]
+		trg_enc = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		trg_enc = encoder.embed_utterance(trg_enc)
+
+		org_enc = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		org_enc = encoder.embed_utterance(trg_enc)
 		
 		item["person"] = p1
 		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
@@ -82,8 +85,11 @@ class testDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
 		
-		trg_enc = self.style_folder[p1]
-		org_enc = self.style_folder[p2]
+		trg_enc = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		trg_enc = encoder.embed_utterance(trg_enc)
+		
+		org_enc = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
+		org_enc = encoder.embed_utterance(trg_enc)
 
 		item["p1"] = p1
 		item["p2"] = p2
