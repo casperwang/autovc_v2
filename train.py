@@ -10,6 +10,8 @@ import torch.optim as optim
 from tqdm import tqdm
 import torch.functional as F
 from params import *
+import matplotlib.pyplot as plt
+import seaborn as sb
 from conversion import convert
 #from vocoder import genspec
 
@@ -60,8 +62,10 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 
 
 		mel_outputs, mel_outputs_postnet, codes = model(uttr_org, emb_org, emb_trg)
-		mel_outputs.squeeze(1)
+		mel_outputs.squeeze(1)		
 		mel_outputs_postnet.squeeze(1)
+		#print(torch.norm(mel_outputs_postnet - uttr_trg, 2) / torch.norm(uttr_trg, 2))
+		#return
 		codes.squeeze(1)
 
 		_, _, trg_codes = model(mel_outputs_postnet, emb_trg, emb_org)
@@ -75,8 +79,8 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		#Zero gradients
 		optimizer.zero_grad()
 		#Calculate Loss
-		L_Recon = MSELoss(mel_outputs_postnet, uttr_org)
-		L_Recon0 = MSELoss(mel_outputs, uttr_org)
+		L_Recon = MSELoss(mel_outputs_postnet, uttr_trg)
+		L_Recon0 = MSELoss(mel_outputs, uttr_trg)
 		L_Content = L1Loss(codes, trg_codes)
 
 		loss = L_Recon * L_Recon + mu * L_Recon0 + lmb * L_Content
@@ -93,6 +97,8 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 			#Draw trg_uttr
 			#Draw mel_outputs_postnet
 			#Display loss
+			print("Relative Loss: ")
+			print(torch.norm((mel_outputs_postnet - uttr_trg), 2) / torch.norm(uttr_trg))
 			mel_outputs_postnet
 			torch.save({
 				"epoch": current_epoch,
