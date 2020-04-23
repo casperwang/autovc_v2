@@ -23,8 +23,31 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 data = datas.testDataset()
 metadata = torch.utils.data.DataLoader([data[0]], batch_size=batch_size)
 
-spect_vc = []
+
+def test_same_person(model, name):
+	spect_vc = []
+	for i, sbmt_i in enumerate(tqdm(metadata)):
+		uttr_org = sbmt_i["org_uttr"].to(device).double()
+		
+		emb_org = sbmt_i['org_enc'].to(device).double()
+		
+		emb_trg = sbmt_i["org_enc"].to(device).double()
+		
+		with torch.no_grad():
+			_, x_identic_psnt, _ = model(uttr_org, emb_org, emb_trg)
+		
+		x_identic_psnt = x_identic_psnt.unsqueeze(0)
+		
+		uttr_trg = x_identic_psnt[0, 0, :, :].cpu().numpy()
+		
+		spect_vc.append( ('{}x{}'.format(sbmt_i["p1"].item(), sbmt_i["p2"].item()), uttr_trg) )
+
+	with open('./result_pkl/{}.pkl'.format(name), 'wb+') as handle:
+		pickle.dump(spect_vc, handle)
+
+
 def convert(model, current_iter):
+	spect_vc = []
 	for i, sbmt_i in enumerate(tqdm(metadata)):
 		uttr_org = sbmt_i["org_uttr"].to(device).double()
 		

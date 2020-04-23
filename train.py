@@ -90,6 +90,10 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 			writer.add_scalar("Loss", loss.item(), current_iter)
 
 		if current_iter % 1000 == 999:
+			#Draw trg_uttr
+			#Draw mel_outputs_postnet
+			#Display loss
+			mel_outputs_postnet
 			torch.save({
 				"epoch": current_epoch,
 				"model": model.state_dict(),
