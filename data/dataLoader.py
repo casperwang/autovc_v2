@@ -61,7 +61,6 @@ class voiceDataset(Dataset):
 		item["org_uttr"] = torch.FloatTensor(org_uttr)
 		item["trg_enc"] = torch.FloatTensor(self.style_folder[p1])
 		item["org_enc"] = torch.FloatTensor(self.style_folder[p1])
-
 		return item
 	
 	def __len__(self):
