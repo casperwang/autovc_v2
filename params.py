@@ -6,8 +6,8 @@ dim_pre = 512
 freq = 32
 
 #training constants
-learning_rate = 0.001
-batch_size = 2
+learning_rate = 0.0001
+batch_size = 16
 
 #Loss constants
 lmb = 1
