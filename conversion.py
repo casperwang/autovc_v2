@@ -78,8 +78,6 @@ def convert(model, current_iter):
 		with torch.no_grad():
 			_, x_identic_psnt, _ = model(uttr_org, emb_org, emb_trg)
 		
-		x_identic_psnt = x_identic_psnt.unsqueeze(0)
-		
 		uttr_trg = x_identic_psnt[0, 0, :, :].cpu().numpy()
 		
 		spect_vc.append( ('{}x{}'.format(sbmt_i["p1"].item(), sbmt_i["p2"].item()), uttr_trg) )
@@ -107,9 +105,7 @@ def convert_two(model, uttr_org, uttr_trg):
 
 	with torch.no_grad():
 			_, x_identic_psnt, _ = model(uttr_org, org_enc, trg_enc)
-	
-	x_identic_psnt = x_identic_psnt.unsqueeze(0)
-	
+		
 	res = x_identic_psnt[0, 0, :, :].cpu().numpy()
 	spect_vc.append( ('fin_conversion', res) )
 		

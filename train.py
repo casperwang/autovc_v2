@@ -56,17 +56,15 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		uttr_trg  = datai["trg_uttr"].to(device).double()  #This and the above will be B * T * F
 		emb_org = datai["org_enc"].to(device).double()#
 		emb_trg = datai["trg_enc"].to(device).double() #This and the above will be B * 1 * dim_style
-		#pdb.set_trace()
 
 		#Turn everything into PyTorch Tensors, and gives the outputs to device
 
 
 		mel_outputs, mel_outputs_postnet, codes = model(uttr_org, emb_org, emb_trg)
-		mel_outputs.squeeze(1)		
-		mel_outputs_postnet.squeeze(1)
+		mel_outputs = mel_outputs.squeeze(1)		
+		mel_outputs_postnet = mel_outputs_postnet.squeeze(1)
 		#print(torch.norm(mel_outputs_postnet - uttr_trg, 2) / torch.norm(uttr_trg, 2))
 		#return
-		codes.squeeze(1)
 
 		_, _, trg_codes = model(mel_outputs_postnet, emb_trg, emb_org)
 		#mel_outputs: 			the output sans postnet
@@ -89,13 +87,13 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		optimizer.step()
 
 		running_loss += loss.item()
-		print("Loss: " + str(loss.item()))
+		'''print("Loss: " + str(loss.item()))
 		print("L_Recon: ")
 		print(L_Recon)
 		print("L_Content")
 		print(L_Content)
 		print("Relative Loss: ")
-		print(torch.norm((mel_outputs_postnet - uttr_org), 2) / torch.norm(uttr_org))
+		print(torch.norm((mel_outputs_postnet - uttr_org), 2) / torch.norm(uttr_org))'''
 		if(doWrite == True):
 			writer.add_scalar("Loss", loss.item(), current_iter)
 
@@ -121,3 +119,4 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 
 
 	return current_iters
+
