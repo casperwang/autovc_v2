@@ -11,7 +11,7 @@ from tqdm import tqdm
 import torch.functional as F
 from params import *
 import matplotlib.pyplot as plt
-import seaborn as sb
+#import seaborn as sb
 from conversion import convert
 #from vocoder import genspec
 
@@ -36,6 +36,7 @@ def pad_seq(x, base = 32):
 	assert len_pad >= 0
 	return np.pad(x, ((0, len_pad), (0, 0)), "constant"), len_pad
 
+
 def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, current_epoch, doWrite = True): #Takes a PyTorch DataLoader as input and 
 	#model: 		the model that you wish to train
 	#optimizer:		the optimizer 
@@ -58,7 +59,6 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 		emb_trg = datai["trg_enc"].to(device).double() #This and the above will be B * 1 * dim_style
 
 		#Turn everything into PyTorch Tensors, and gives the outputs to device
-
 
 		mel_outputs, mel_outputs_postnet, codes = model(uttr_org, emb_org, emb_trg)
 		mel_outputs = mel_outputs.squeeze(1)		
