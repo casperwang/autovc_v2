@@ -34,6 +34,7 @@ def pad_seq(x, base = 32):
 	assert len_pad >= 0
 	return np.pad(x, ((0, len_pad), (0, 0)), "constant"), len_pad
 
+
 def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, current_epoch, doWrite = True): #Takes a PyTorch DataLoader as input and 
 	#model: 		the model that you wish to train
 	#optimizer:		the optimizer 
@@ -58,10 +59,10 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 
 		#Turn everything into PyTorch Tensors, and gives the outputs to device
 
-
 		mel_outputs, mel_outputs_postnet, codes = model(uttr_org, emb_org, emb_trg)
 		mel_outputs.squeeze(1)
 		mel_outputs_postnet.squeeze(1)
+		print(mel_outputs_postnet.shape)
 		codes.squeeze(1)
 
 		_, _, trg_codes = model(mel_outputs_postnet, emb_trg, emb_org)
