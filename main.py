@@ -39,7 +39,7 @@ if __name__ == "__main__":
 		G.load_state_dict(g_checkpoint['model'])
 		optimizer.load_state_dict(g_checkpoint['optimizer'])
 
-	if(opts.mode == "train"):
+	if opts.mode == "train" :
 		G = G.train()
 		current_iter = 0
 		for epoch in range(opts.epochs):
@@ -60,5 +60,18 @@ if __name__ == "__main__":
 				pickle.dump(spect_vc, handle)
 
 		print("done")
+	elif opts.mode == "convert":
+		g_checkpoint = torch.load(load_path, map_location = torch.device(device)) #Load from
+		G.load_state_dict(g_checkpoint['model'])
+		print("Finished loading")
+		G = G.eval()
+		
+		wav_folder = pickle.load(open('./demo/data.pkl', "rb"))
+		uttr_org = wav_folder[0][0]
+		uttr_trg = wav_folder[1][0]
+		spect_vc = conversion.convert_two(G, uttr_org, uttr_trg)
+
+		with open('./result_pkl/demo_conv.pkl', 'wb+') as handle:
+				pickle.dump(spect_vc, handle)
 
 
