@@ -68,7 +68,8 @@ if __name__ == "__main__":
 		
 		wav_folder = pickle.load(open('./demo/data.pkl', "rb"))
 		uttr_org = wav_folder[0][0]
-		uttr_trg = wav_folder[1][0]
+		wav_folder = pickle.load(open('./data/data.pkl', "rb"))
+		uttr_trg = wav_folder[1][1]
 		spect_vc = conversion.convert_two(G, uttr_org, uttr_trg)
 
 		with open('./result_pkl/demo_conv.pkl', 'wb+') as handle:

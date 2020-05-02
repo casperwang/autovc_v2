@@ -54,7 +54,7 @@ class voiceDataset(Dataset):
 		trg_enc = encoder.embed_utterance(trg_enc)
 
 		org_enc = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		org_enc = encoder.embed_utterance(trg_enc)
+		org_enc = encoder.embed_utterance(org_enc)
 		
 		item["person"] = p1
 		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
