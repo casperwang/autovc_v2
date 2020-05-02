@@ -89,8 +89,8 @@ def convert(model, current_iter):
 
 def convert_two(model, uttr_org, uttr_trg):
 	spect_vc = []
-	spect_vc.append( ("uttr_org", uttr_org) )
-	spect_vc.append( ("uttr_trg", uttr_trg) )
+	#spect_vc.append( ("uttr_org", uttr_org) )
+	#spect_vc.append( ("uttr_trg", uttr_trg) )
 
 	uttr_trg, _ = pad_seq(uttr_trg, 32)
 	uttr_org, _ = pad_seq(uttr_org, 32)
