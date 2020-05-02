@@ -56,6 +56,16 @@ if os.path.isfile(DIR):
     people['C3PO'] = 1
     wavs.append(DIR)
 
+DIR = 'data/Sean_01.wav'
+if os.path.isfile(DIR):
+    mels[2] = []
+    style_list[2] = []
+    style[2] = [0]*256
+    people['Sean'] = 2
+    wavs.append(DIR)
+
+
+
 print("finish Checking File!!!")
 
 for wav_path in tqdm(wavs):
