@@ -7,6 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 import torch.optim as optim
 import argparse
 import pdb
+import pickle
 from params import *
 
 
@@ -47,9 +48,17 @@ if __name__ == "__main__":
 	elif opts.mode == "test":
 		g_checkpoint = torch.load(load_path, map_location = torch.device(device)) #Load from
 		G.load_state_dict(g_checkpoint['model'])
-		optimizer.load_state_dict(g_checkpoint['optimizer'])
 		print("Finished loading")
-		G = G.eval();
-		conversion.convert_test(G, "jizz");
-				
+		G = G.eval()
+		
+		wav_folder = pickle.load(open('./data/data.pkl', "rb"))
+		uttr_org = wav_folder[1][1]
+		uttr_trg = wav_folder[2][2]
+		spect_vc = conversion.convert_two(G, uttr_org, uttr_trg)
+
+		with open('./result_pkl/fin_conv.pkl', 'wb+') as handle:
+				pickle.dump(spect_vc, handle)
+
+		print("done")
+
 
