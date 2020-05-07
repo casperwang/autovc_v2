@@ -18,7 +18,7 @@ style_list = dict()
 style = dict()
 iters = []
 WAV_LEN = 256
-PEOPLE_CNT = 20
+PEOPLE_CNT = 150
 write_path = './'
 int16_max = (2 ** 15) - 1
 encoder = VoiceEncoder()
@@ -53,7 +53,7 @@ for i in range(225, 225 + PEOPLE_CNT):
 		style[p] =[0]*256
 		wavs_sz = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
 		f, c = 0, 1
-		while f < wavs_sz:
+		while f < wavs_sz and f < 50:
 			if os.path.isfile(DIR+'/p'+str(i)+'_'+str(c).zfill(3)+'.wav'):
 				wavs.append(DIR+'/p'+str(i)+'_'+str(c).zfill(3)+'.wav')
 				f += 1
