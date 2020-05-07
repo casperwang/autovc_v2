@@ -49,7 +49,6 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 	for i, datai in enumerate(tqdm(dataset)):
 
 		#datai: B * C * T * F
-		#pdb.set_trace()
 
 		current_iter = current_iter + 1
 

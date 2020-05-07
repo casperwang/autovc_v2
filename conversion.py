@@ -96,7 +96,7 @@ def convert_two(model, uttr_org, uttr_trg):
 	trg_enc = encoder.embed_utterance(trg_enc)
 
 	org_enc = normalize_volume(uttr_org.reshape(-1), target_dBFS = -30, increase_only = True)
-	org_enc = encoder.embed_utterance(trg_enc)
+	org_enc = encoder.embed_utterance(org_enc)
 
 	uttr_trg = torch.FloatTensor(uttr_trg).to(device).double().unsqueeze(0)
 	uttr_org = torch.FloatTensor(uttr_org).to(device).double().unsqueeze(0)
