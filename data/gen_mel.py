@@ -23,7 +23,7 @@ write_path = './'
 int16_max = (2 ** 15) - 1
 encoder = VoiceEncoder()
 
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 
 def pad_seq(x, base=32):
@@ -50,7 +50,7 @@ for i in range(225, 225 + PEOPLE_CNT):
 		people[i] = p
 		mels[p] = []
 		style_list[p] = []
-		style[p] =[0]*256
+		style[p] = [0]*256
 		wavs_sz = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
 		f, c = 0, 1
 		while f < wavs_sz and f < 50:
@@ -75,9 +75,9 @@ for wav_path in tqdm(wavs):
 
 	mels[idx].append(result)
 
-	result = normalize_volume(result.reshape(-1), target_dBFS = -30, increase_only = True)
-	result = encoder.embed_utterance(result)
-	style_list[idx].append(result)
+	obj = preprocess_wav(wav_path)
+	emb = encoder.embed_utterance(obj)
+	style_list[idx].append(emb)
 
 with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 	pickle.dump(mels, handle)

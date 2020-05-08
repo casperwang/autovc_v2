@@ -40,38 +40,28 @@ def normalize_volume(wav, target_dBFS, increase_only=False, decrease_only=False)
         return wav
     return wav * (10 ** (dBFS_change / 20))
 
-DIR = 'data/Yoda_01.wav'
-if os.path.isfile(DIR):
-    mels[0] = []
-    style_list[0] = []
-    style[0] = [0]*256
-    people['Yoda'] = 0
-    wavs.append(DIR)
+org_DIR = 'data/Sean_01.wav'
+trg_DIR = 'data/C3PO_01.wav'
 
-DIR = 'data/C3PO_01.wav'
-if os.path.isfile(DIR):
+if os.path.isfile(org_DIR):
     mels[1] = []
     style_list[1] = []
     style[1] = [0]*256
-    people['C3PO'] = 1
-    wavs.append(DIR)
+    people[org_DIR[5:-7]] = 1
+    wavs.append(org_DIR)
 
-DIR = 'data/Sean_01.wav'
-if os.path.isfile(DIR):
+if os.path.isfile(trg_DIR):
     mels[2] = []
     style_list[2] = []
     style[2] = [0]*256
-    people['Sean'] = 2
-    wavs.append(DIR)
-
-
+    people[trg_DIR[5:-7]] = 2
+    wavs.append(trg_DIR)
 
 print("finish Checking File!!!")
 
 for wav_path in tqdm(wavs):
- 
 	basename = os.path.basename(wav_path).split('.wav')[0]
-	idx = people[basename[-7:-3]]
+	idx = people[basename[0:-3]]
 	wav = audio.load_wav(wav_path)
 	wav = wav / np.abs(wav).max() * hparams.hparams.rescaling_max
 
@@ -86,8 +76,6 @@ for wav_path in tqdm(wavs):
 	result = normalize_volume(result.reshape(-1), target_dBFS = -30, increase_only = True)
 	result = encoder.embed_utterance(result)
 	style_list[idx].append(result)
-
-print(mels)
 
 with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 	pickle.dump(mels, handle)

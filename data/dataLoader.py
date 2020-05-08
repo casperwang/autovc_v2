@@ -50,53 +50,14 @@ class voiceDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['j']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['k']], 32)
 		
-		trg_enc = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		trg_enc = encoder.embed_utterance(trg_enc)
-
-		org_enc = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		org_enc = encoder.embed_utterance(org_enc)
+		trg_enc = self.style_folder[p1]
+		org_enc = self.style_folder[p1]
 		
 		item["person"] = p1
 		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
 		item["org_uttr"] = torch.FloatTensor(org_uttr)
-		item["trg_enc"] = trg_enc
-		item["org_enc"] = org_enc
-		return item
-	
-	def __len__(self):
-		return len(self.iter_folder)
-
-class testDataset(Dataset):
-	wav_folder = []
-	iter_folder = []
-	style_folder = []
-
-	def __init__(self):
-		self.iter_folder = pickle.load(open('./data/test_iters.pkl', "rb"))
-		self.style_folder = pickle.load(open('./data/style_data.pkl', "rb"))
-		self.wav_folder = pickle.load(open('./data/data.pkl', "rb"))
-	
-	def __getitem__(self, index): #Should iterate through all possible triples
-		item = dict()
-		p1 = self.iter_folder[index]['p1']
-		p2 = self.iter_folder[index]['p2']
-		
-		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['i']], 32)
-		org_uttr, _ = pad_seq(self.wav_folder[p2][self.iter_folder[index]['j']], 32)
-		
-		trg_enc = normalize_volume(trg_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		trg_enc = encoder.embed_utterance(trg_enc)
-		
-		org_enc = normalize_volume(org_uttr.reshape(-1), target_dBFS = -30, increase_only = True)
-		org_enc = encoder.embed_utterance(trg_enc)
-
-		item["p1"] = p1
-		item["p2"] = p2
-		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
-		item["org_uttr"] = torch.FloatTensor(org_uttr)
 		item["trg_enc"] = torch.FloatTensor(trg_enc)
 		item["org_enc"] = torch.FloatTensor(org_enc)
-
 		return item
 	
 	def __len__(self):

@@ -65,7 +65,6 @@ def test_same_person(model, name):
 	with open('./result_pkl/{}.pkl'.format(name), 'wb+') as handle:
 		pickle.dump(spect_vc, handle)
 
-
 def convert(model, current_iter):
 	spect_vc = []
 	for i, sbmt_i in enumerate(tqdm(metadata)):

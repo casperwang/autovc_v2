@@ -425,10 +425,9 @@ class Generator(nn.Module):
 
 		
 		mel_outputs = self.decoder(encoder_outputs)
-				
+		
 		mel_outputs_postnet = self.postnet(mel_outputs.transpose(2,1)) 
 		mel_outputs_postnet = mel_outputs + mel_outputs_postnet.transpose(2,1) #Adds postnet
 		
 		return mel_outputs, mel_outputs_postnet, torch.cat(codes, dim=-1)
-
 '''

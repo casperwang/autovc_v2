@@ -115,7 +115,5 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 			convert(model, current_iter)
 			#genspec("./result_pkl/results_iter{}.pkl".format(current_iter), "res_{}".format(current_iter))
 
-
-
 	return current_iters
 
