@@ -39,7 +39,7 @@ if __name__ == "__main__":
 		G.load_state_dict(g_checkpoint['model'])
 		optimizer.load_state_dict(g_checkpoint['optimizer'])
 
-	if opts.mode == "train" :
+	if opts.mode == "train":
 		G = G.train()
 		current_iter = 0
 		for epoch in range(opts.epochs):
@@ -70,6 +70,7 @@ if __name__ == "__main__":
 		uttr_org = wav_folder[1][0]
 		uttr_trg = wav_folder[2][0]
 		spect_vc = conversion.convert_two(G, uttr_org, uttr_trg)
+		print(spect_vc)
 
 		with open('./result_pkl/demo_conv.pkl', 'wb+') as handle:
 			pickle.dump(spect_vc, handle)

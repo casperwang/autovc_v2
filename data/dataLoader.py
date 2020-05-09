@@ -50,8 +50,8 @@ class voiceDataset(Dataset):
 		trg_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['j']], 32)
 		org_uttr, _ = pad_seq(self.wav_folder[p1][self.iter_folder[index]['k']], 32)
 		
-		trg_enc = self.style_folder[p1]
-		org_enc = self.style_folder[p1]
+		trg_enc = self.style_folder[p1][self.iter_folder[index]['j']]
+		org_enc = self.style_folder[p1][self.iter_folder[index]['k']]
 		
 		item["person"] = p1
 		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
