@@ -84,15 +84,17 @@ with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 
 print("finish 'data.pkl' !!!")
 
+'''
 for idx in style_list:
 	for s in style_list[idx]:
 		for i in range(256):
 			style[idx][i] += s[i]
 	for i in range(256):
 		style[idx][i] = style[idx][i] / len(style_list[idx])
+'''
 
 with open(os.path.join(write_path,'style_data.pkl'),'wb') as handle:
-	pickle.dump(style, handle)
+	pickle.dump(style_list, handle)
 
 print("finish 'style_data.pkl' !!!")
 

@@ -21,7 +21,7 @@ from resemblyzer import VoiceEncoder
 os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 
 
-data = datas.testDataset()
+data = datas.voiceDataset()
 metadata = torch.utils.data.DataLoader([data[0]], batch_size=batch_size)
 encoder = VoiceEncoder()
 

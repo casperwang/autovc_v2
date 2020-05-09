@@ -43,6 +43,7 @@ def normalize_volume(wav, target_dBFS, increase_only=False, decrease_only=False)
 org_DIR = 'data/weichung.wav'
 trg_DIR = 'data/andrew.wav'
 
+
 if os.path.isfile(org_DIR):
 	mels[1] = []
 	style_list[1] = []
@@ -73,10 +74,6 @@ for wav_path in tqdm(wavs):
 	result[:min(tmp.shape[0],WAV_LEN),:tmp.shape[1]] = tmp[:min(tmp.shape[0],WAV_LEN),:tmp.shape[1]]
 
 	mels[idx].append(result)
-
-	result = normalize_volume(result.reshape(-1), target_dBFS = -30, increase_only = True)
-	result = encoder.embed_utterance(result)
-	style_list[idx].append(result)
 
 with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 	pickle.dump(mels, handle)
