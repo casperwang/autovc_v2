@@ -12,3 +12,6 @@
 
 /autovc.ckpt
 /last.ckpt
+*.wav
+*.pyc
+*.pkl
