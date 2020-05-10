@@ -52,7 +52,6 @@ class voiceDataset(Dataset):
 		
 		trg_enc = self.style_folder[p1][self.iter_folder[index]['j']]
 		org_enc = self.style_folder[p1][self.iter_folder[index]['k']]
-		
 		item["person"] = p1
 		item["trg_uttr"] = torch.FloatTensor(trg_uttr)
 		item["org_uttr"] = torch.FloatTensor(org_uttr)

@@ -112,7 +112,7 @@ def train_one_epoch(model, optimizer, dataset, device, save_dir, current_iter, c
 				"model": model.state_dict(),
 				"optimizer": optimizer.state_dict()
 			}, save_dir + "/last.ckpt")
-			convert(model, current_iter)
+			#convert(model, current_iter)
 			#genspec("./result_pkl/results_iter{}.pkl".format(current_iter), "res_{}".format(current_iter))
 
 	return current_iters
