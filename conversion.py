@@ -16,7 +16,7 @@ from model import Generator
 from params import *
 import os
 import pdb
-from resemblyzer import VoiceEncoder
+from resemblyzer import VoiceEncoder, preprocess_wav
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True' #Prevents OMP Error #15
 
@@ -91,10 +91,10 @@ def convert_two(model, uttr_org, uttr_trg):
 
 	uttr_trg, _ = pad_seq(uttr_trg, 32)
 	uttr_org, _ = pad_seq(uttr_org, 32)
-	trg_enc = normalize_volume(uttr_trg.reshape(-1), target_dBFS = -30, increase_only = True)
+	trg_enc = preprocess_wav("./demo/data/22618_01.wav")
 	trg_enc = encoder.embed_utterance(trg_enc)
 
-	org_enc = normalize_volume(uttr_org.reshape(-1), target_dBFS = -30, increase_only = True)
+	org_enc = preprocess_wav("./demo/data/22617_01.wav")
 	org_enc = encoder.embed_utterance(org_enc)
 
 	uttr_trg = torch.FloatTensor(uttr_trg).to(device).double().unsqueeze(0)
