@@ -10,6 +10,7 @@ from resemblyzer import preprocess_wav, VoiceEncoder
 import os
 import glob
 from tqdm import tqdm
+import pdb 
 
 wavs = []
 people = dict()
@@ -59,9 +60,7 @@ for i in range(225, 225 + PEOPLE_CNT):
 				f += 1
 			c += 1
 
-print("finish Checking File!!!")
 for wav_path in tqdm(wavs):
- 
 	basename = os.path.basename(wav_path).split('.wav')[0]
 	idx = people[int(basename[-7:-4])]
 	wav = audio.load_wav(wav_path)
@@ -78,6 +77,8 @@ for wav_path in tqdm(wavs):
 	obj = preprocess_wav(wav_path)
 	emb = encoder.embed_utterance(obj)
 	style_list[idx].append(emb)
+
+
 
 with open(os.path.join(write_path,'data.pkl'),'wb') as handle:
 	pickle.dump(mels, handle)
